@@ -54,13 +54,20 @@ validate () {
 # install_pack 
 
 cp mongodb.repo /etc/yum.repos.d/mongo.repo
-VALIDATE $? "copying MongoDB repo"
+VALIDATE $? "copying MongoDB repo"  
 
-dnf install mongodb-org -y
+dnf install mongodb-org -y &>>$LOG_FILE
 VALIDATE $? "Installing mongodb server"
 
-systectl enable mongod
+systectl enable mongod &>>$LOG_FILE
 VALIDATE $? "Enabling mongodb"
 
-systemctl restart mongod
+systemctl start mongod &>>$LOG_FILE
+VALIDATE $? "Starting monogoDB"
+
+#change config file for ip address
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf  &>>$LOG_FILE
+VALIDATE $? "Editing mongoDB file for Remote connection"
+
+systemctl restart mongod &>>$LOG_FILE
 VALIDATE $? "Starting monogoDB"
