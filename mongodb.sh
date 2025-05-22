@@ -4,9 +4,9 @@
 
 #requried variables
 root_access=$(id -u)
-red=\e[31m
-green=\e[32m
-reset=\e[0m
+red="\e[31m"
+green="\e[32m"
+reset="\e[0m"
 
 #to save and check logs
 LOGS_FOLDER="/var/log/mongodb-logs"
@@ -17,11 +17,11 @@ PACKAGES=("mysql" "python" "nginx" "httpd")
 mkdir -p $LOGS_FOLDER
 echo "Script started and executed at: $(date)" | tee -a $LOG_FILE
 
-if [$root_access -ne 0 ]
+if [ $root_access -ne 0 ]
 then
     echo -e "$red ERROR:: run the script with root access $reset" | tee -a $LOG_FILE
 else
-    echo "$green script is runnung...no issues $reset" | tee -a $LOG_FILE
+    echo -e "$green script is runnung...no issues $reset" | tee -a $LOG_FILE
 fi
 
 #function to validate the command is executed or not
