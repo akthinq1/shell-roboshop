@@ -35,10 +35,10 @@ VALIDATE () {
 dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "Disabling default Nodejs"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enabling Nodejs:20"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing Nodejs:20"
 
 #find user is already created or not, if not created create system user
@@ -59,24 +59,24 @@ VALIDATE $? "Downloading Catalogue"
 
 rm -rf /app/*
 cd /app
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping data in catalogue"
 
-npm install
+npm install &>>$LOG_FILE
 VALIDATE $? "installing npm packages"
 
 cp $SCRIPT_DIRECTORY/catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "Copying catalogue service"
 
-systemctl daemon-reload
-systemctl enable catalogue 
-systemctl start catalogue
+systemctl daemon-reload &>>$LOG_FILE
+systemctl enable catalogue &>>$LOG_FILE
+systemctl start catalogue &>>$LOG_FILE
 VALIDATE $? "Starting Catalogue"
 
 cp $SCRIPT_DIRECTORY/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Copied mongo repo"
 
-dnf install mongodb-mongosh -y &>>$LOG_FILE
+dnf install mongodb-mongosh -y &>>$LOG_FILE 
 VALIDATE $? "Installing MongoDB Client"
 
 STATUS=$(mongosh --host mongodb.daws84s.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
