@@ -25,7 +25,7 @@ else
 fi
 
 #function to validate the command is executed or not
-validate () {
+VALIDATE () {
    
     if [ $1 -eq 0 ]
     then
