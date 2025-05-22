@@ -4,10 +4,18 @@
 
 #required variables
 
+# akdevops
+# AMI_ID="ami-09c813fb71547fc4f"
+# SG_ID="sg-03884c9ac49287e7d"
+# INSTANCES=( "frontend" "mongodb" "mysql" "rabbitmq" "redis" "catalogue" "user" "cart" "shipping" "payment" "dispatch" )
+# ZONE_ID="Z06554383VBJBI4HM0QKT"
+# DOMAIN_NAME="akdevops.fun"
+
+#aneeldevops
 AMI_ID="ami-09c813fb71547fc4f"
-SG_ID="sg-03884c9ac49287e7d"
+SG_ID="sg-0f5f6a7a78c2680f3"
 INSTANCES=( "frontend" "mongodb" "mysql" "rabbitmq" "redis" "catalogue" "user" "cart" "shipping" "payment" "dispatch" )
-ZONE_ID="Z06554383VBJBI4HM0QKT"
+ZONE_ID="Z03020892L2MVWUPPWT50"
 DOMAIN_NAME="akdevops.fun"
 
 #to create all instaince at one time
