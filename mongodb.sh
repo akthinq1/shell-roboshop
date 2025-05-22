@@ -9,7 +9,7 @@ green="\e[32m"
 reset="\e[0m"
 
 #to save and check logs
-LOGS_FOLDER="/var/log/mongodb-logs"
+LOGS_FOLDER="/var/log/roboshop-logs"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 PACKAGES=("mysql" "python" "nginx" "httpd")
