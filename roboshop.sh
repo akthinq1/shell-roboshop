@@ -25,12 +25,12 @@ DOMAIN_NAME="akdevops.fun"
 DB=( "mongodb" "mysql" )
 for instance in $@
 do
-    if [ $instance == "mongodb" ]
+    if [[ $instance == "mongodb"  || $instance == "mysql" ]]
     then
         INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro --security-group-ids sg-0f5f6a7a78c2680f3 --tag-specifications "ResourceType=instance,Tags=[{Key=Name, Value=$instance}]" --query "Instances[0].InstanceId" --output text)
-    elif [ $instance == "mysql" ]
-    then
-        INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro --security-group-ids sg-0f5f6a7a78c2680f3 --tag-specifications "ResourceType=instance,Tags=[{Key=Name, Value=$instance}]" --query "Instances[0].InstanceId" --output text)
+    # elif [ $instance == "mysql" ]
+    # then
+    #     INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro --security-group-ids sg-0f5f6a7a78c2680f3 --tag-specifications "ResourceType=instance,Tags=[{Key=Name, Value=$instance}]" --query "Instances[0].InstanceId" --output text)
     else
         INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t2.micro --security-group-ids sg-0f5f6a7a78c2680f3 --tag-specifications "ResourceType=instance,Tags=[{Key=Name, Value=$instance}]" --query "Instances[0].InstanceId" --output text)
     fi
