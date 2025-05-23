@@ -79,10 +79,10 @@ VALIDATE $? "Copied mongo repo"
 dnf install mongodb-mongosh -y &>>$LOG_FILE 
 VALIDATE $? "Installing MongoDB Client"
 
-STATUS=$(mongosh --host 172.31.46.10 --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+STATUS=$(mongosh --host mongodb.akdevops.fun --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 if [ $STATUS -le 0 ]
 then
-    mongosh --host 172.31.46.10 </app/db/master-data.js &>>$LOG_FILE
+    mongosh --host mongodb.akdevops.fun </app/db/master-data.js &>>$LOG_FILE
     VALIDATE $? "Loading data into MongoDB"
 else
     echo -e "Data is already loaded ... $Y SKIPPING $N"
