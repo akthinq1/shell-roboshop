@@ -1,5 +1,6 @@
 #!bin/bah
 
+START_TIME=$(date +%s)
 #insatll packages
 
 #requried variables
@@ -13,6 +14,7 @@ LOGS_FOLDER="/var/log/roboshop-logs"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 PACKAGES=("mysql" "python" "nginx" "httpd")
+
 
 mkdir -p $LOGS_FOLDER
 echo "Script started and executed at: $(date)" | tee -a $LOG_FILE
@@ -70,3 +72,8 @@ VALIDATE $? "Editing mongoDB file for Remote connection"
 
 systemctl restart mongod &>>$LOG_FILE
 VALIDATE $? "Starting monogoDB"
+
+END_TIME=$(date +%s)
+
+TOTAL_TIME=$($END_TIME-$START_TIME)
+echo "Time taken to complete the script $TOTAL_TIME" | tee -a &>>LOG_FILE

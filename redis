@@ -1,6 +1,6 @@
 #!/bin/bash
 
-START=$(date +%s)
+START_TIME=$(date +%s)
 R="e\[31m"
 G="e\[32m"
 Y="e\[33m"
@@ -48,3 +48,8 @@ VALIDATE $? "Enabling Redis"
 
 systemctl start redis
 VALIDATE $? "Started Redis"
+
+END_TIME=$(date +%s)
+
+TOTAL_TIME=$($END_TIME-$START_TIME)
+echo -e "Time taken to complete the script $Y TIME:: $TOTAL_TIME $N" | tee -a &>>LOG_FILE
