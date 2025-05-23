@@ -75,5 +75,5 @@ VALIDATE $? "Starting monogoDB"
 
 END_TIME=$(date +%s)
 
-TOTAL_TIME=$($END_TIME-$START_TIME)
+TOTAL_TIME=$(( $END_TIME-$START_TIME ))
 echo "Time taken to complete the script $TOTAL_TIME" | tee -a &>>LOG_FILE

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 START_TIME=$(date +%s)
-R="e\[31m"
-G="e\[32m"
-Y="e\[33m"
-N="e\[0m"
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
 LOGS_FOLDER=""/var/log/roboshop-logs
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
@@ -51,5 +51,5 @@ VALIDATE $? "Started Redis"
 
 END_TIME=$(date +%s)
 
-TOTAL_TIME=$($END_TIME-$START_TIME)
-echo -e "Time taken to complete the script $Y TIME:: $TOTAL_TIME $N" | tee -a &>>LOG_FILE
+TOTAL_TIME=$(( $END_TIME-$START_TIME))
+echo -e "Time taken to complete the script $Y TIME:: $TOTAL_TIME in seconds $N" | tee -a &>>LOG_FILE
