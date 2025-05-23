@@ -26,8 +26,7 @@ fi
 
 #function to validate the command is executed or not
 VALIDATE () {
-   
-    if [ $1 -eq 0 ]
+       if [ $1 -eq 0 ]
     then
         echo -e " $2...is $green success $reset" | tee -a $LOG_FILE
     else
