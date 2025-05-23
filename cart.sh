@@ -1,15 +1,15 @@
 #!/bin/bash
-START_TIME=$(date +%s)
 
-#required varaiables
+START_TIME=$(date +%s)
 red="\e[31m"
 green="\e[32m"
 Y="\e[33m"
 reset="\e[0m"
+
 LOGS_FOLDER="/var/log/roboshop-logs"
-SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
-root_access=$(id -u)
+SCRIPT_NAME=echo $0 | cut -d "." -f1
+LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
+check_root=$(id -u)
 SCRIPT_DIRECTORY=$PWD
 
 mkdir -p $LOGS_FOLDER
@@ -55,24 +55,24 @@ fi
 mkdir -p /app
 VALIDATE $? "app directory is created"
 
-curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>>$LOG_FILE
+curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading user"
 
 rm -rf /app/*
 cd /app
-unzip /tmp/user.zip &>>$LOG_FILE
-VALIDATE $? "Unzipping data in user"
+unzip /tmp/cart.zip &>>$LOG_FILE
+VALIDATE $? "Unzipping data in cart"
 
 npm install &>>$LOG_FILE
 VALIDATE $? "installing npm packages"
 
-cp $SCRIPT_DIRECTORY/user.service /etc/systemd/system/user.service
-VALIDATE $? "Copying user service"
+cp $SCRIPT_DIRECTORY/cart.service /etc/systemd/system/cart.service
+VALIDATE $? "Copying cart service"
 
 systemctl daemon-reload &>>$LOG_FILE
-systemctl enable user &>>$LOG_FILE
-systemctl start user &>>$LOG_FILE
-VALIDATE $? "Starting user"
+systemctl enable cart &>>$LOG_FILE
+systemctl start cart &>>$LOG_FILE
+VALIDATE $? "Starting cart"
 
 END_TIME=$(date +%s)
 
