@@ -68,7 +68,7 @@ systemctl start shipping &>>$LOG_FILE
 
 dnf install mysql -y &>>$LOG_FILE
 
-# mysql -hmysql.akdevops.fun -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities' &>>$LOG_FILE
+mysql -h mysql.akdevops.fun -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities' &>>$LOG_FILE
 
 if [ $? -ne 0 ]
 then
