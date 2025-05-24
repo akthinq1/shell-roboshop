@@ -70,29 +70,29 @@ dnf install mysql -y &>>$LOG_FILE
 
 # mysql -hmysql.akdevops.fun -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities' &>>$LOG_FILE
 
-# if [ $? -ne 0 ]
-# then
-#     mysql -h mysql.akdevops.fun -uroot -p$MYSQL_ROOT_PASSWD < /app/db/schema.sql &>>$LOG_FILE
-#     mysql -h mysql.akdevops.fun -uroot -p$MYSQL_ROOT_PASSWD < /app/db/app-user.sql  &>>$LOG_FILE
-#     mysql -h mysql.akdevops.fun -uroot -p$MYSQL_ROOT_PASSWD < /app/db/master-data.sql &>>$LOG_FILE
-#     VALIDATE $? "Loading data into MySQL"
-# else
-#     echo -e "Data is already loaded into MySQL ... $Y SKIPPING $N"
-# fi
-
-DB_EXISTS=$(mysql -h mysql.akdevops.fun -u root -pRoboShop@1 -sse "SHOW DATABASES LIKE 'cities';")
-if [ "$DB_EXISTS" != "cities" ]; then
-    mysql -h mysql.akdevops.fun -u root -pRoboShop@1 -e 'CREATE DATABASE cities;' &>> "$LOG_FILE"
-    VALIDATE $? "Creating cities database"
-    mysql -h mysql.akdevops.fun -u root -pRoboShop@1 cities < /app/db/schema.sql &>> "$LOG_FILE"
-    VALIDATE $? "Loading schema.sql"
-    mysql -h mysql.akdevops.fun -u root -pRoboShop@1 cities < /app/db/app-user.sql &>> "$LOG_FILE"
-    VALIDATE $? "Loading app-user.sql"
-    mysql -h mysql.akdevops.fun -u root -pRoboShop@1 cities < /app/db/master-data.sql &>> "$LOG_FILE"
-    VALIDATE $? "Loading master-data.sql"
+if [ $? -ne 0 ]
+then
+    mysql -h mysql.akdevops.fun -uroot -p$MYSQL_ROOT_PASSWD < /app/db/schema.sql &>>$LOG_FILE
+    mysql -h mysql.akdevops.fun -uroot -p$MYSQL_ROOT_PASSWD < /app/db/app-user.sql  &>>$LOG_FILE
+    mysql -h mysql.akdevops.fun -uroot -p$MYSQL_ROOT_PASSWD < /app/db/master-data.sql &>>$LOG_FILE
+    VALIDATE $? "Loading data into MySQL"
 else
-    echo -e "Database data is ${y}already loaded${reset}, skipping..." | tee -a "$LOG_FILE"
+    echo -e "Data is already loaded into MySQL ... $Y SKIPPING $N"
 fi
+
+# DB_EXISTS=$(mysql -h mysql.akdevops.fun -u root -pRoboShop@1 -sse "SHOW DATABASES LIKE 'cities';")
+# if [ "$DB_EXISTS" != "cities" ]; then
+#     mysql -h mysql.akdevops.fun -u root -pRoboShop@1 -e 'CREATE DATABASE cities;' &>> "$LOG_FILE"
+#     VALIDATE $? "Creating cities database"
+#     mysql -h mysql.akdevops.fun -u root -pRoboShop@1 cities < /app/db/schema.sql &>> "$LOG_FILE"
+#     VALIDATE $? "Loading schema.sql"
+#     mysql -h mysql.akdevops.fun -u root -pRoboShop@1 cities < /app/db/app-user.sql &>> "$LOG_FILE"
+#     VALIDATE $? "Loading app-user.sql"
+#     mysql -h mysql.akdevops.fun -u root -pRoboShop@1 cities < /app/db/master-data.sql &>> "$LOG_FILE"
+#     VALIDATE $? "Loading master-data.sql"
+# else
+#     echo -e "Database data is ${y}already loaded${reset}, skipping..." | tee -a "$LOG_FILE"
+# fi
 
 systemctl restart shipping &>>$LOG_FILE
 
