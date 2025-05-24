@@ -35,7 +35,7 @@ VALIDATE () {
     fi
 }
 
-dnf install maven -y
+dnf install maven -y &>>$LOG_FILE
 VALIDATE $? "Installing Maven and Java"
 
 id roboshop &>>$LOG_FILE
@@ -47,26 +47,26 @@ else
     echo -e "System user roboshop already created ... $Y SKIPPING $N"
 fi
 
-mkdir -p /app 
+mkdir -p /app &>>$LOG_FILE
 
-curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
+curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip  &>>$LOG_FILE
 VALIDATE $? "downloading shipping"
 
-rm -rf /app/*
-cd /app 
-unzip /tmp/shipping.zip
+rm -rf /app/* &>>$LOG_FILE
+cd /app &>>$LOG_FILE
+unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "unzipping shipping component"
 
-mvn clean package 
+mvn clean package &>>$LOG_FILE
 mv target/shipping-1.0.jar shipping.jar 
 
-cp $SCRIPT_DIRECTORY/shipping.service /etc/systemd/system/shipping.service
+cp $SCRIPT_DIRECTORY/shipping.service /etc/systemd/system/shipping.service &>>$LOG_FILE
 
-systemctl daemon-reload
-systemctl enable shipping 
-systemctl start shipping
+systemctl daemon-reload &>>$LOG_FILE
+systemctl enable shipping &>>$LOG_FILE
+systemctl start shipping &>>$LOG_FILE
 
-dnf install mysql -y 
+dnf install mysql -y &>>$LOG_FILE
 
 mysql -hmysql.akdevops.fun -u root -p$MYSQL_ROOT_PASSWORD -e 'use cities' &>>$LOG_FILE
 
@@ -80,7 +80,7 @@ else
     echo -e "Data is already loaded into MySQL ... $Y SKIPPING $N"
 fi
 
-systemctl restart shipping
+systemctl restart shipping &>>$LOG_FILE
 
 END_TIME=$(date +%s)
 TOTAL_TIME=$(( $END_TIME - $START_TIME ))
