@@ -36,8 +36,8 @@ VALIDATE () {
     fi
 }
 
-dnf disable mysql-server -y
-VALIDATE $? "Disabling mysql server"
+
+
 dnf install mysql-server -y
 VALIDATE $? "installing mysql server"
 
