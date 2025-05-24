@@ -68,9 +68,9 @@ systemctl start shipping
 
 dnf install mysql -y 
 
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -p$MYSQL_ROOT_PASSWD < /app/db/schema.sql
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -p$MYSQL_ROOT_PASSWD < /app/db/app-user.sql 
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -p$MYSQL_ROOT_PASSWD < /app/db/master-data.sql
+mysql -h mysql.akdevops.fun -uroot -p$MYSQL_ROOT_PASSWD < /app/db/schema.sql
+mysql -h mysql.akdevops.fun -uroot -p$MYSQL_ROOT_PASSWD < /app/db/app-user.sql 
+mysql -h mysql.akdevops.fun -uroot -p$MYSQL_ROOT_PASSWD < /app/db/master-data.sql
 
 systemctl restart shipping
 
