@@ -60,7 +60,7 @@ VALIDATE $? "unzipping shipping component"
 mvn clean package 
 mv target/shipping-1.0.jar shipping.jar 
 
-cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
+cp $SCRIPT_DIRECTORY/shipping.service /etc/systemd/system/shipping.service
 
 systemctl daemon-reload
 systemctl enable shipping 
