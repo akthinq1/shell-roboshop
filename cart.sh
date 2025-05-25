@@ -7,7 +7,7 @@ Y="\e[33m"
 reset="\e[0m"
 
 LOGS_FOLDER="/var/log/roboshop-logs"
-SCRIPT_NAME=$($0 | cut -d "." -f1)
+SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 check_root=$(id -u)
 SCRIPT_DIRECTORY=$PWD
@@ -15,7 +15,7 @@ SCRIPT_DIRECTORY=$PWD
 mkdir -p $LOGS_FOLDER &>>$LOG_FILE
 echo "Script started and executed at: $(date)" | tee -a $LOG_FILE
 
-if [ $root_access != 0 ]
+if [ $check_root -ne 0 ]
 then
     echo -e "$red ERROR:: run the script with root access $reset" | tee -a $LOG_FILE
     exit 1 #exit status for error
