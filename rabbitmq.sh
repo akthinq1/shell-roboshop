@@ -25,7 +25,7 @@ else
 fi
 
 #password for mysql
-echo -e "$BEnter RebbitMQ PASSWORD : $N" ; read RebbitMQ_PASSWORD &>>$LOG_FILE
+echo -e "$BEnter RabbitMQ PASSWORD : $N" ; read RabbitMQ_PASSWORD &>>$LOG_FILE
 
 VALIDATE () {
        if [ $1 -eq 0 ]
@@ -49,7 +49,7 @@ VALIDATE $? "Enabling rabbitmq repo"
 systemctl start rabbitmq-server &>>$LOG_FILE
 VALIDATE $? "Starting rabbitmq repo"
 
-rabbitmqctl add_user roboshop $RebbitMQ_PASSWORD
+rabbitmqctl add_user roboshop $RabbitMQ_PASSWORD
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
 
 END_TIME=$(date +%s) &>>$LOG_FILE
