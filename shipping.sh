@@ -23,7 +23,7 @@ else
 fi
 
 #password for mysql
-echo -e "$BEnter MYSQL PASSWORD : $N" ; read MYSQL_ROOT_PASSWD &>>$LOG_FILE
+echo -e $B"Enter MYSQL PASSWORD : "$N ; read MYSQL_ROOT_PASSWD &>>$LOG_FILE
 
 VALIDATE () {
        if [ $1 -eq 0 ]
