@@ -9,10 +9,10 @@ Environment=CART_HOST=cart.akdevops.fun
 Environment=CART_PORT=8080
 Environment=USER_HOST=user.akdevops.fun
 Environment=USER_PORT=8080
-Environment=AMQP_HOST=rebbitmq.akdevops.fun
+Environment=AMQP_HOST=rabbitmq.akdevops.fun
 // highlight-end
 Environment=AMQP_USER=roboshop
-Environment=AMQP_PASS=RoboShop@1
+Environment=AMQP_PASS=roboshop123
 
 ExecStart=/usr/local/bin/uwsgi --ini payment.ini
 ExecStop=/bin/kill -9 $MAINPID

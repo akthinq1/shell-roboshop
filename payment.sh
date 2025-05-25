@@ -12,7 +12,7 @@ LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 SCRIPT_DIRECTORY=$PWD
 check_root=$(id -u)
 
-mkdir -p $LOGS_FOLDER
+mkdir -p $LOGS_FOLDER &>>$LOG_FILE
 echo "Script started executing at: $(date)" | tee -a $LOG_FILE
 
 if [ $check_root != 0 ]
@@ -23,7 +23,7 @@ else
 fi
 
 #password for mysql
-echo -e "$B Enter MYSQL PASSWORD : $N" ; read MYSQL_PASSWORD &>>$LOG_FILE
+# echo -e "$B Enter MYSQL PASSWORD : $N" ; read MYSQL_PASSWORD &>>$LOG_FILE
 
 VALIDATE () {
        if [ $1 -eq 0 ]
@@ -35,7 +35,7 @@ VALIDATE () {
     fi
 }
 
-dnf install python3 gcc python3-devel -y
+dnf install python3 gcc python3-devel -y &>>$LOG_FILE
 VALIDATE $? "Installing Python3 packages"
 
 id roboshop &>>$LOG_FILE
@@ -47,29 +47,29 @@ else
     echo -e "System user roboshop already created ... $Y SKIPPING $N"
 fi
 
-mkdir -p /app 
+mkdir -p /app &>>$LOG_FILE
 
-curl -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip 
+curl -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip &>>$LOG_FILE
 VALIDATE $? "downlading payment"
 
-rm -rf /app/*
-cd /app 
-unzip /tmp/payment.zip
+rm -rf /app/* &>>$LOG_FILE
+cd /app &>>$LOG_FILE
+unzip /tmp/payment.zip &>>$LOG_FILE
 VALIDATE $? "unzipping payment"
 
-pip3 install -r requirements.txt
+pip3 install -r requirements.txt &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
-cp $SCRIPT_DIRECTORY/payment.service /etc/systemd/system/payment.service
+cp $SCRIPT_DIRECTORY/payment.service /etc/systemd/system/payment.service &>>$LOG_FILE
 VALIDATE $? "Copying payment service"
 
-systemctl daemon-reload
+systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "reloaidng payment service"
 
-systemctl enable payment 
+systemctl enable payment &>>$LOG_FILE
 VALIDATE $? "enabling payment service"
 
-systemctl start payment
+systemctl start payment &>>$LOG_FILE
 VALIDATE $? "starting payment service"
 
 END_TIME=$(date +%s)

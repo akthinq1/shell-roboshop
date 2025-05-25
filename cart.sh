@@ -12,7 +12,7 @@ LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 check_root=$(id -u)
 SCRIPT_DIRECTORY=$PWD
 
-mkdir -p $LOGS_FOLDER
+mkdir -p $LOGS_FOLDER &>>$LOG_FILE
 echo "Script started and executed at: $(date)" | tee -a $LOG_FILE
 
 if [ $root_access -ne 0 ]
@@ -52,21 +52,21 @@ else
     echo -e "System user roboshop is alredy created and available ... $Y SKIPPING $reset"
 fi
 
-mkdir -p /app
+mkdir -p /app &>>$LOG_FILE
 VALIDATE $? "app directory is created"
 
 curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading user"
 
-rm -rf /app/*
-cd /app
+rm -rf /app/* &>>$LOG_FILE
+cd /app &>>$LOG_FILE
 unzip /tmp/cart.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping data in cart"
 
 npm install &>>$LOG_FILE
 VALIDATE $? "installing npm packages"
 
-cp $SCRIPT_DIRECTORY/cart.service /etc/systemd/system/cart.service
+cp $SCRIPT_DIRECTORY/cart.service /etc/systemd/system/cart.service &>>$LOG_FILE
 VALIDATE $? "Copying cart service"
 
 systemctl daemon-reload &>>$LOG_FILE
